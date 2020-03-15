@@ -5,7 +5,7 @@ interface Body {
 export const server = {
   // cURL POST GraphQL Query
   // curl -X POST 'http://{endpoint}/api' -H 'Content-Type: application/json' -d '{"query": "{listings {id}}"}'
-  fetch: async (body: Body) => {
+  fetch: async <TData = any>(body: Body) => {
     const response = await fetch("/api", {
       method: "POST",
       headers: {
@@ -13,6 +13,6 @@ export const server = {
       },
       body: JSON.stringify(body)
     });
-    return response.json();
+    return response.json() as Promise<{ data: TData }>; // type assert as TData argument type
   }
 };
