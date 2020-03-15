@@ -6,33 +6,26 @@ import {
   ListingsData
 } from "./types";
 
+const LISTING_PROPS = `{
+  id,
+  title,
+  image,
+  price,
+  address,
+  numberOfBedrooms,
+  numberOfBathrooms,
+  rating
+}`;
+
 const LISTINGS = `
   query Listings {
-    listings {
-      id,
-      title,
-      image,
-      price,
-      address,
-      numberOfBedrooms,
-      numberOfBathrooms,
-      rating
-    }
+    listings ${LISTING_PROPS}
   }
 `;
 
 const DELETE_LISTING = `
   mutation DeleteListing($id: ID!) {
-    deleteListing(id: $id) {
-      id,
-      title,
-      image,
-      price,
-      address,
-      numberOfBedrooms,
-      numberOfBathrooms,
-      rating
-    }
+    deleteListing(id: $id) ${LISTING_PROPS}
   }
 `;
 
