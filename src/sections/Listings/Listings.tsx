@@ -62,7 +62,7 @@ export const Listings = ({ title }: Props) => {
           {listings.map(listing => {
             return (
               <li key={listing.id} id={listing.id}>
-                {listing.title}. {listing.price}. {listing.rating}.&nbsp;
+                {listing.title}. {listing.price}. {listing.rating}.{" "}
                 <button
                   onClick={() => deleteListing(listing.id)}
                   id={`Delete${listing.id}`}
