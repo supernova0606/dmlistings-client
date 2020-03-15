@@ -1,11 +1,12 @@
-interface Body {
+interface Body<TVariables> {
   query: string;
+  variables?: TVariables;
 }
 
 export const server = {
   // cURL POST GraphQL Query
   // curl -X POST 'http://{endpoint}/api' -H 'Content-Type: application/json' -d '{"query": "{listings {id}}"}'
-  fetch: async <TData = any>(body: Body) => {
+  fetch: async <TData = any, TVariables = any>(body: Body<TVariables>) => {
     const response = await fetch("/api", {
       method: "POST",
       headers: {
