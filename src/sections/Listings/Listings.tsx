@@ -1,5 +1,9 @@
 import React from "react";
 
-export const Listings = () => {
-  return <h1>Listings from dmlistings</h1>;
+interface Props {
+  title: string;
+}
+
+export const Listings = ({ title }: Props) => {
+  return <h1>{title}</h1>;
 };
