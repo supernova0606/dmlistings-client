@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { server } from "../../lib/api";
 import {
   DeleteListingData,
@@ -36,6 +36,16 @@ interface Props {
 
 export const Listings = ({ title }: Props) => {
   const [listings, setListings] = useState<Listing[] | null>(null);
+
+  useEffect(
+    () => {
+      // on first render fetch listings
+      fetchListings();
+      // optionally add return callback below for cleanup after component unmounts
+    },
+    [] // ensures only runs on first render (component mount).
+    // Optionally pass listings as dependency to run on changes to listings
+  );
 
   const fetchListings = async () => {
     const { data } = await server.fetch<ListingsData>({ query: LISTINGS });
