@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { server } from "../../lib/api";
+import React from "react";
+import { server, useQuery } from "../../lib/api";
 import {
   DeleteListingData,
   DeleteListingVariables,
-  Listing,
   ListingsData
 } from "./types";
 
@@ -35,22 +34,9 @@ interface Props {
 }
 
 export const Listings = ({ title }: Props) => {
-  const [listings, setListings] = useState<Listing[] | null>(null);
+  const { data } = useQuery<ListingsData>(LISTINGS);
 
-  useEffect(
-    () => {
-      // on first render fetch listings
-      fetchListings();
-      // optionally add return callback below for cleanup after component unmounts
-    },
-    [] // ensures only runs on first render (component mount).
-    // Optionally pass listings as dependency to run on changes to listings
-  );
-
-  const fetchListings = async () => {
-    const { data } = await server.fetch<ListingsData>({ query: LISTINGS });
-    setListings(data.listings);
-  };
+  const listings = data ? data.listings : null;
 
   const deleteListing = async (id: string) => {
     const { data } = await server.fetch<
@@ -60,7 +46,6 @@ export const Listings = ({ title }: Props) => {
       query: DELETE_LISTING,
       variables: { id: id }
     });
-    fetchListings();
     console.log(data.deleteListing);
   };
 
@@ -92,11 +77,6 @@ export const Listings = ({ title }: Props) => {
         <h1>{title}</h1>
       </div>
       {listingsList}
-      <div>
-        <button onClick={fetchListings} id="Listings">
-          Get Listings
-        </button>
-      </div>
     </main>
   );
 };
