@@ -3,6 +3,10 @@ interface Body<TVariables> {
   variables?: TVariables;
 }
 
+interface Error {
+  message: string;
+}
+
 export const server = {
   // cURL POST GraphQL Query
   // curl -X POST 'http://{endpoint}/api' -H 'Content-Type: application/json' -d '{"query": "{listings {id}}"}'
@@ -14,6 +18,9 @@ export const server = {
       },
       body: JSON.stringify(body)
     });
-    return response.json() as Promise<{ data: TData }>; // type assert as TData argument type
+    if (!response.ok) {
+      throw new Error(`Server request failed with status ${response.status}`);
+    }
+    return response.json() as Promise<{ data: TData; errors?: Error[] }>; // type assert as TData argument type
   }
 };

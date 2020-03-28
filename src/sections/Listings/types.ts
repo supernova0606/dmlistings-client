@@ -11,6 +11,7 @@ export interface Listing {
 
 export interface ListingsData {
   listings: Listing[];
+  errors: [];
 }
 
 export interface DeleteListingData {
